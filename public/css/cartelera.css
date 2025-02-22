@@ -1,0 +1,126 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #00000000;
+}
+.register{
+    min-height: 50px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.carousel-item img {
+    min-height: 150px;
+    width: 100%;
+    height: auto;
+    max-height: 500px; /* Limita la altura máxima */
+}
+.movie-image-container {
+    position: relative;
+    width: 100%;
+}
+
+.movie-image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.815); /* Fondo oscuro con opacidad */
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.movie-image-container:hover .overlay {
+    opacity: 1; /* Muestra el texto cuando se hace hover */
+}
+
+.overlay .text {
+    text-align: center;
+}
+
+.overlay p {
+    margin: 5px 0;
+}
+
+.footer {
+    background-color: #222;
+    color: white;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer h5 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.footer p {
+    font-size: 0.9rem;
+}
+
+.footer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin: 5px 0;
+}
+
+.footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer ul li a:hover {
+    color: #00bcd4;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-icon {
+    font-size: 24px;
+    margin: 0 10px;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #00bcd4;
+}
+
+.footer .text-center p {
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+    color: #222;
+}
+
+
+

@@ -1,52 +1,54 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SeatController;
 
-Route::get('/cartelera', [MovieController::class, 'index'])->name('movies.index');
+// Rutas de Cartelera y Usuarios
+Route::prefix('movies')->group(function () {
+    Route::get('/cartelera', [MovieController::class, 'index'])->name('movies.index');
+    Route::get('/location', [MovieController::class, 'showLocation'])->name('movies.location');
+    Route::get('/login', [MovieController::class, 'showLogin'])->name('movies.login');
+    Route::get('/register', [MovieController::class, 'showRegister'])->name('movies.register');
+    Route::get('/comprar/{movie}', [MovieController::class, 'showComprar'])->name('movies.comprar');
+    Route::post('/reserve-seat', [SeatController::class, 'reserveSeat'])->name('seats.reserve');
+});
 
-Route::get('movies/location', [MovieController::class, 'showLocation'])->name('movies.location');
+// Rutas de Autenticación
+Route::prefix('auth')->group(function () {
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/logout', function () {
+        auth()->logout();
+        return redirect('/movies/cartelera');
+    })->name('logout');
+});
 
-Route::get('movies/login', [MovieController::class, 'showLogin'])->name('movies.login');
-Route::get('movies/register', [MovieController::class, 'showRegister'])->name('movies.register');
+// Rutas de Administración 
+Route::prefix('admin')->group(function () {
+    Route::get('/password', [AdminMovieController::class, 'showPasswordForm'])->name('admin.password');
+    Route::post('/verify-password', [AdminMovieController::class, 'verifyPassword'])->name('admin.verify-password');
 
-// Ruta para mostrar el formulario de contraseña
-Route::get('admin/password', [AdminMovieController::class, 'showPasswordForm'])->name('admin.password');
+    Route::get('/movies/create', function () {
+        if (!session()->has('admin_verified') || session('admin_verified') !== true) {
+            return redirect()->route('admin.password');
+        }
+        return app(AdminMovieController::class)->create();
+    })->name('movies.create');
 
-// Ruta para verificar la contraseña y permitir el acceso al panel de administración
-Route::post('admin/verify-password', [AdminMovieController::class, 'verifyPassword'])->name('admin.verify-password');
+    Route::post('/movies', function () {
+        if (!session()->has('admin_verified') || session('admin_verified') !== true) {
+            return redirect()->route('admin.password');
+        }
+        return app(AdminMovieController::class)->store(request());
+    })->name('movies.store');
 
-// Ruta para crear la película (protegida por la sesión de contraseña)
-Route::get('admin/movies/create', [AdminMovieController::class, 'create'])->name('movies.create');
-
-// Ruta para almacenar la película (protegida por la sesión de contraseña)
-Route::post('admin/movies', [AdminMovieController::class, 'store'])->name('movies.store');
-
-// Cierra la sesión
-Route::post('logout', function () {
-    auth()->logout(); 
-    return redirect('/cartelera'); 
-})->name('logout');
-
-// Mostrar formularios
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-
-// Procesar registro e inicio de sesión
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-
-// Ruta para mostrar la página de compra de entradas
-Route::get('comprar/{movie}', [MovieController::class, 'showComprar'])->name('movies.comprar');
-
-Route::post('movies/reserve-seat', [SeatController::class, 'reserveSeat'])->name('seats.reserve');
-
-Route::get('admin/movies/create/{movieId}', [MovieController::class, 'exportarReservas']);
-Route::get('admin/movies/export', [MovieController::class, 'exportarPeliculas'])->name('movies.export');
-
+    Route::get('/movies/create/{movieId}', [AdminMovieController::class, 'exportarReservas'])->name('movies.exportarReservas');
+    Route::get('/movies/export', [MovieController::class, 'exportarPeliculas'])->name('movies.export');
+});
 
 
 

@@ -40,7 +40,7 @@ class AuthController extends Controller {
         Auth::login($user);
     
         // Redirigir a /cartelera con un mensaje de éxito
-        return redirect('/cartelera')->with('welcome', 'Hola, ' . ucfirst($user->first_name) . ' el registro se completo perfectamente');
+        return redirect('movies/cartelera')->with('welcome', 'Hola, ' . ucfirst($user->first_name) . ' el registro se completo perfectamente');
     }
 
     // Inicio de sesión
@@ -57,7 +57,7 @@ class AuthController extends Controller {
             $request->session()->regenerate();
             
             // Redirigimos a la cartelera y mostramos un mensaje de éxito
-            return redirect('/cartelera')->with('success', 'Inicio de sesión exitoso, hola de nuevo ' . ucfirst(auth()->user()->first_name));
+            return redirect('movies/cartelera')->with('success', 'Inicio de sesión exitoso, hola de nuevo ' . ucfirst(auth()->user()->first_name));
         }
     
         // Si las credenciales no coinciden, regresamos con un mensaje de error

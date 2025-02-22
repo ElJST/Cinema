@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 
 class AdminMovieController extends Controller
 {
-
     // Mostrar formulario para ingresar la contraseña
     public function showPasswordForm()
     {
         return view('admin.password');
     }
 
+    // Verificar la contraseña y establecer la sesión
     public function verifyPassword(Request $request)
     {
         // Contraseña almacenada (puedes cambiarla por la que desees)
@@ -23,7 +23,7 @@ class AdminMovieController extends Controller
         if ($request->password === $correctPassword) {
             // Establecer una variable de sesión para indicar que el admin está verificado
             session(['admin_verified' => true]);
-            
+
             return redirect()->route('movies.create'); // Redirige a la vista para crear la película
         }
 
@@ -31,7 +31,7 @@ class AdminMovieController extends Controller
         return back()->with('error', 'Contraseña incorrecta.');
     }
 
-
+    // Mostrar el listado de películas
     public function index()
     {
         $movies = Movie::all(); // Obtiene todas las películas
@@ -42,7 +42,7 @@ class AdminMovieController extends Controller
     public function create()
     {
         // Verificar si la sesión contiene la variable admin_verified
-        if (!session()->has('admin_verified') || session('admin_verified') !== true) {
+        if (!session()->has('admin_verified') || session()->get('admin_verified') !== true) {
             // Si no, redirigir a la página de contraseña
             return redirect()->route('admin.password');
         }
@@ -50,12 +50,11 @@ class AdminMovieController extends Controller
         return view('admin.movies.create');
     }
 
-
     // Guardar la película en la base de datos
     public function store(Request $request)
     {
         // Verificar si la sesión contiene la variable admin_verified
-        if (!session()->has('admin_verified') || session('admin_verified') !== true) {
+        if (!session()->has('admin_verified') || session()->get('admin_verified') !== true) {
             // Si no, redirigir a la página de contraseña
             return redirect()->route('admin.password');
         }
@@ -87,9 +86,8 @@ class AdminMovieController extends Controller
         // Redirigir a la página de creación con un mensaje de éxito
         return redirect()->route('movies.create')->with('success', 'Película añadida correctamente');
     }
-
-
 }
+
 
 
 

@@ -16,8 +16,8 @@ class AdminMovieController extends Controller
     // Verificar la contraseña y establecer la sesión
     public function verifyPassword(Request $request)
     {
-        // Contraseña almacenada (puedes cambiarla por la que desees)
-        $correctPassword = 'JustinAdmin04'; 
+        // Contraseña almacenada 
+        $correctPassword = env('ADMIN_PASSWORD');
 
         // Verificar si la contraseña ingresada es correcta
         if ($request->password === $correctPassword) {

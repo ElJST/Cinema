@@ -84,7 +84,11 @@
                               <p><strong>Descripción:</strong> {{ $movie->description }}</p>
                               <p><strong>Horarios:</strong> {{ implode(', ', $movie->showtimes ?? ['no hay horarios']) }}</p>
                               <!-- Botón para comprar entradas, redirige a la página de compra de la película -->
-                              <a href="{{ route('movies.comprar', $movie->id) }}" class="btn btn-primary mt-2">Comprar Entradas</a>
+                              @if (session('success') || session('welcome'))
+                                <a href="{{ route('movies.comprar', $movie->id) }}" class="btn btn-primary mt-2">Comprar Entradas</a>
+                              @else
+                                <a href="{{ route('movies.login') }}" class="btn btn-primary mt-2">Iniciar Sesion</a>
+                              @endif
                           </div>
                       </div>
                   </div>

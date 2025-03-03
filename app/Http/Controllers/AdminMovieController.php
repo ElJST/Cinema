@@ -47,7 +47,11 @@ class AdminMovieController extends Controller
             return redirect()->route('admin.password');
         }
 
-        return view('admin.movies.create');
+        // Obtener todas las películas
+        $movies = Movie::all();
+
+        // Pasar las películas a la vista
+        return view('admin.movies.create', compact('movies'));
     }
 
     // Guardar la película en la base de datos
@@ -86,6 +90,15 @@ class AdminMovieController extends Controller
         // Redirigir a la página de creación con un mensaje de éxito
         return redirect()->route('movies.create')->with('success', 'Película añadida correctamente');
     }
+
+    public function destroy($id)
+    {
+        $movie = Movie::findOrFail($id);
+        $movie->delete();
+
+        return back()->with('success', 'Película eliminada correctamente.');
+    }
+
 }
 
 

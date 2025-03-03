@@ -19,10 +19,6 @@ body{
     height: auto;
     max-height: 500px; /* Limita la altura máxima */
 }
-.movie-image-container {
-    position: relative;
-    width: 100%;
-}
 
 .movie-image-container img {
     width: 100%;
@@ -31,6 +27,10 @@ body{
     transition: opacity 0.3s ease;
 }
 
+.movie-image-container {
+    position: relative;
+    width: 100%;
+}
 .overlay {
     position: absolute;
     top: 0;
@@ -56,9 +56,62 @@ body{
     text-align: center;
 }
 
+@media (max-width: 1025px) {
+    .overlay {
+        font-size: 14px; /* Reduce el tamaño de la fuente */
+        padding: 10px; /* Menos espacio en el padding */
+    }
+
+    .movie-info {
+        max-height: 90px; /* Limita la altura para evitar desbordamiento */
+    }
+
+    .size-btn {
+        font-size: 14px; /* Reduce el tamaño del botón */
+        padding: 8px; /* Ajuste del padding */
+    }
+}
+
+/* Pantallas medianas (Tablets - hasta 785px) */
+@media (max-width: 785px) {
+    .overlay {
+        font-size: 14px; /* Reduce el tamaño de la fuente */
+        padding: 10px; /* Menos espacio en el padding */
+    }
+
+    .movie-info {
+        max-height: 90px; /* Limita la altura para evitar desbordamiento */
+    }
+
+    .size-btn {
+        font-size: 14px; /* Reduce el tamaño del botón */
+        padding: 8px; /* Ajuste del padding */
+    }
+}
+
+/* Pantallas pequeñas (Móviles - hasta 576px) */
+@media (max-width: 576px) {
+    .overlay {
+        font-size: 12px; /* Reduce aún más el tamaño de la fuente */
+        padding: 8px; /* Espaciado más reducido */
+    }
+
+    .size-btn {
+        width: 50% !important;
+        font-size: 12px !important;
+    }
+
+    .movie h2 {
+        font-size: 26px; /* Reduce el tamaño del título */
+        text-align: center; /* Centra los títulos */
+    }
+}
+
+
 .overlay p {
     margin: 5px 0;
 }
+
 
 .footer {
     background-color: #222;

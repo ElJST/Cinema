@@ -31,6 +31,7 @@ Route::prefix('auth')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/password', [AdminMovieController::class, 'showPasswordForm'])->name('admin.password');
     Route::post('/verify-password', [AdminMovieController::class, 'verifyPassword'])->name('admin.verify-password');
+    Route::delete('/movies/{id}', [AdminMovieController::class, 'destroy'])->name('movies.destroy');
 
     Route::get('/movies/create', function () {
         if (!session()->has('admin_verified') || session('admin_verified') !== true) {
